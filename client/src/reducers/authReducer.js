@@ -3,7 +3,7 @@ import { REGISTER_SUCCESS, REGISTER_FAILURE, USER_LOADED, AUTH_ERROR, LOGIN_SUCC
 const initailState = {
     token: localStorage.getItem('token'),
     isAuthenticated: null,
-    loading: true,
+    isAuthLoading: false,
     user: null
 }
 const authReducer = (state = initailState, action) => {
@@ -11,13 +11,13 @@ const authReducer = (state = initailState, action) => {
     switch (type) {
         case USER_LOADED:
             return {
-                ...state, isAuthenticated: true, loading: false, user: payload
+                ...state, isAuthenticated: true, isAuthLoading: false, user: payload
             }
         case REGISTER_SUCCESS:
         case LOGIN_SUCCESS:
             localStorage.setItem('token', payload.token);
             return {
-                ...state, ...payload, isAuthenticated: true, loading: false
+                ...state, ...payload, isAuthenticated: true, isAuthLoading: false
             }
         case REGISTER_FAILURE:
         case AUTH_ERROR:
@@ -25,7 +25,7 @@ const authReducer = (state = initailState, action) => {
         case LOGOUT:
             localStorage.removeItem('token');
             return {
-                ...state, token: null, isAuthenticated: false, loading: false
+                ...state, token: null, isAuthenticated: false, isAuthLoading: false
             }
         default:
             return state;

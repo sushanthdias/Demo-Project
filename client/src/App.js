@@ -5,6 +5,12 @@ import Landing from './components/layout/Landing';
 import Register from './components/auth/Register';
 import Login from './components/auth/Login';
 import Alert from './components/layout/Alert';
+import CreateBook from './components/forms/CreateBook';
+import EditBook from './components/forms/EditBook';
+import CreateAuthor from './components/forms/CreateAuthor';
+import EditAuthor from './components/forms/EditAuthor';
+import Dashboard from './components/dashboard/Dashboard';
+import PrivateRoute from './components/routing/PrivateRoute';
 //Redux
 import { Provider } from 'react-redux';
 import store from './store';
@@ -12,6 +18,7 @@ import { loadUser } from './actions/authAction';
 import setAuthToken from './utils/setAuthToken';
 
 import './App.css';
+import 'antd/dist/antd.css';
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
@@ -34,6 +41,11 @@ const App = () => {
             <Switch>
               <Route exact path="/register" component={Register} />
               <Route exact path="/login" component={Login} />
+              <PrivateRoute exact path="/dashboard" component={Dashboard} />
+              <PrivateRoute exact path="/create-book" component={CreateBook} />
+              <PrivateRoute exact path="/edit-book" component={EditBook} />
+              <PrivateRoute exact path="/create-author" component={CreateAuthor} />
+              <PrivateRoute exact path="/edit-author" component={EditAuthor} />
             </Switch>
           </section>
         </Fragment>
