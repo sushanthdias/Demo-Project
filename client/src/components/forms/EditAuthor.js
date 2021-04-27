@@ -1,22 +1,16 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { Fragment, useState } from 'react';
 import { Link, withRouter, useHistory } from 'react-router-dom';
-import { updateAuthor, getAuthorById } from '../../actions/authorAction';
-import { useSelector, useDispatch } from 'react-redux';
+import { updateAuthor } from '../../actions/authorAction';
+import { useDispatch } from 'react-redux';
 
-const EditAuthor = ({ location: { state: { id } } }) => {
+const EditAuthor = ({ location: { state: { current_author } } }) => {
     const dispatch = useDispatch();
     const history = useHistory();
 
-    useEffect(() => {
-        dispatch(getAuthorById(id));
-    }, []);
-
-    const { current_author } = useSelector(state => state.author);
-
     const [formData, setFormData] = useState({
-        firstName: current_author && current_author.firstName ? current_author.firstName : '',
-        lastName: current_author && current_author.lastName ? current_author.lastName : '',
-        email: current_author && current_author.email ? current_author.email : '',
+        firstName: current_author.firstName,
+        lastName: current_author.lastName,
+        email: current_author.email,
     });
     const { firstName, lastName, email } = formData;
 

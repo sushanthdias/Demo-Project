@@ -69,10 +69,8 @@ router.put('/:id', [
     }
 });
 
-
-
 // @route  POST api/book
-// @desc   Create or update book
+// @desc   Create book
 // @access Private
 router.post('/', [
     auth,
@@ -82,11 +80,9 @@ router.post('/', [
     check('author', 'Author is required').not().isEmpty(),
 ], async (req, res) => {
     const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
-    }
-    const { name, isbn, image, author } = req.body;
+    if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
 
+    const { name, isbn, image, author } = req.body;
     //Build book object
     const bookFields = {};
     bookFields.user = req.user.id;
@@ -102,5 +98,20 @@ router.post('/', [
         console.error(err.message);
         res.status(500).send('Server Error');
     }
-})
+});
+
+// @route  DELETE api/book/:id
+// @desc   Delete book by ID
+// @access Private
+router.delete('/:id', auth, async (req, res) => {
+    try {
+        //remove book
+        await Book.findByIdAndRemove(req.params.id);
+        res.json({ msg: 'Book Deleted' });
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).send("Server Error");
+    }
+});
+
 module.exports = router;

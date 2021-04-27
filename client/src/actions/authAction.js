@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { REGISTER_SUCCESS, REGISTER_FAILURE, USER_LOADED, AUTH_ERROR, LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT } from './types';
+import { REGISTER_SUCCESS, REGISTER_FAILURE, USER_LOADED, AUTH_ERROR, LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT, GET_ALL_USERS_REQUEST, GET_ALL_USERS_SUCCESS, GET_ALL_USERS_FAILURE } from './types';
 import { setAlert } from './alertAction';
 import setAuthToken from '../utils/setAuthToken';
 
@@ -14,7 +14,18 @@ export const loadUser = () => async dispatch => {
     } catch (err) {
         dispatch({ type: AUTH_ERROR });
     }
-}
+};
+
+//Get All Users
+export const getAllUsers = () => async dispatch => {
+    dispatch({ type: GET_ALL_USERS_REQUEST })
+    try {
+        const res = await axios.get('/api/users');
+        dispatch({ type: GET_ALL_USERS_SUCCESS, payload: res.data });
+    } catch (err) {
+        dispatch({ type: GET_ALL_USERS_FAILURE, payload: { msg: err.response.statusText, status: err.response.status } });
+    }
+};
 
 
 //Register User

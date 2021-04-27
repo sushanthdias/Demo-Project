@@ -49,6 +49,7 @@ img {
   font-size: 4rem;
   line-height: 1.2;
   margin-bottom: 1rem;
+  color: white;
 }
 
 .large {
@@ -575,7 +576,9 @@ button {
     padding: 0.3rem 0.4rem;
   }
 }
-
+.edit-icon {
+  color: #1890ff;
+}
 .edit-icon:hover {
   transform: translate(0, -2px);
 }
@@ -584,6 +587,12 @@ button {
   color: red;
 }
 .trash-icon:hover {
+  transform: translate(0, -2px);
+}
+.view-icon {
+  color: #1890ff;
+}
+.view-icon:hover {
   transform: translate(0, -2px);
 }
 

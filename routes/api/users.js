@@ -4,14 +4,27 @@ const gravatar = require('gravatar');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const config = require('config');
+const auth = require('../../middleware/auth');
 const { check, validationResult } = require('express-validator');
 
 const User = require('../../models/User');
 
 // @route  GET api/users
-// @desc   Test route
-// @access Public
-//router.get('/', (req, res) => res.send('User route'));
+// @desc   Get all users
+// @access Private
+router.get('/', auth, async (req, res) => {
+    try {
+        const users = await User.find().select('-password');
+        if (!users) {
+            return res.status(400).json({ msg: 'There is no user' });
+        }
+        res.json(users);
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).send("Server Error");
+    }
+});
+
 
 // @route  POST api/users
 // @desc   Register User

@@ -3,7 +3,7 @@ import { setAlert } from './alertAction';
 import { config } from './types';
 
 import { GET_AUTHOR_REQUEST, GET_AUTHOR_SUCCESS, GET_AUTHOR_FAILURE, POST_AUTHOR_REQUEST, POST_AUTHOR_SUCCESS, POST_AUTHOR_FAILURE, PUT_AUTHOR_REQUEST, PUT_AUTHOR_SUCCESS, PUT_AUTHOR_FAILURE } from './types';
-import { GET_CURRENT_AUTHOR_REQUEST, GET_CURRENT_AUTHOR_SUCCESS, GET_CURRENT_AUTHOR_FAILURE } from './types';
+import { GET_CURRENT_AUTHOR_REQUEST, GET_CURRENT_AUTHOR_SUCCESS, GET_CURRENT_AUTHOR_FAILURE, DELETE_AUTHOR_REQUEST, DELETE_AUTHOR_SUCCESS, DELETE_AUTHOR_FAILURE } from './types';
 
 //Get all auther list by user
 export const getAllAuthorByUser = () => async dispatch => {
@@ -23,6 +23,7 @@ export const getAuthorById = (id) => async dispatch => {
         const res = await axios.get(`/api/author/${id}`, config);
         dispatch({ type: GET_CURRENT_AUTHOR_SUCCESS, payload: res.data });
     } catch (err) {
+        console.log("ERR", err)
         const errors = err.response.data.errors;
         if (errors) {
             errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
@@ -62,6 +63,23 @@ export const updateAuthor = (formData) => async dispatch => {
             errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
         }
         dispatch({ type: PUT_AUTHOR_FAILURE, payload: { msg: err.response.statusText, status: err.response.status } });
+    }
+};
+
+//delete author
+export const deleteAuthor = id => async dispatch => {
+    dispatch({ type: DELETE_AUTHOR_REQUEST })
+    try {
+        const res = await axios.delete(`/api/author/${id}`, config);
+        dispatch({ type: DELETE_AUTHOR_SUCCESS, payload: res.data });
+        dispatch(getAllAuthorByUser());
+        dispatch(setAlert('Author Deleted', 'success'));
+    } catch (err) {
+        const errors = err.response.data.errors;
+        if (errors) {
+            errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
+        }
+        dispatch({ type: DELETE_AUTHOR_FAILURE, payload: { msg: err.response.statusText, status: err.response.status } });
     }
 };
 

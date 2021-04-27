@@ -67,8 +67,6 @@ router.put('/:id', [
     }
 });
 
-
-
 // @route  POST api/author
 // @desc   Create author
 // @access Private
@@ -99,5 +97,19 @@ router.post('/', [
         console.error(err.message);
         res.status(500).send('Server Error');
     }
-})
+});
+
+// @route  DELETE api/author/:id
+// @desc   Delete author by ID
+// @access Private
+router.delete('/:id', auth, async (req, res) => {
+    try {
+        //remove author
+        await Author.findByIdAndRemove(req.params.id);
+        res.json({ msg: 'Author Deleted' });
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).send("Server Error");
+    }
+});
 module.exports = router;

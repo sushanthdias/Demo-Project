@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from 'react';
 import { Link, withRouter, useHistory } from 'react-router-dom';
 import { createAuthor } from '../../actions/authorAction';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 const CreateAuthor = () => {
     const dispatch = useDispatch();

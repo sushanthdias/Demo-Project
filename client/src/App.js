@@ -11,6 +11,7 @@ import CreateAuthor from './components/forms/CreateAuthor';
 import EditAuthor from './components/forms/EditAuthor';
 import Dashboard from './components/dashboard/Dashboard';
 import PrivateRoute from './components/routing/PrivateRoute';
+import Users from './components/dashboard/Users';
 //Redux
 import { Provider } from 'react-redux';
 import store from './store';
@@ -46,6 +47,7 @@ const App = () => {
               <PrivateRoute exact path="/edit-book" component={EditBook} />
               <PrivateRoute exact path="/create-author" component={CreateAuthor} />
               <PrivateRoute exact path="/edit-author" component={EditAuthor} />
+              <PrivateRoute exact path="/users" component={Users} />
             </Switch>
           </section>
         </Fragment>
